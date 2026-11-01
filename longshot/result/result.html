@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LongShot Screenshot</title>
+    <link rel="icon" href="../icons/icon-32.png" />
+    <link rel="stylesheet" href="../ui/theme.css" />
+    <link rel="stylesheet" href="result.css" />
+    <script type="module" src="result.js"></script>
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true"></div>
+
+    <header class="topbar glass">
+      <div class="topbar-inner">
+        <img src="../icons/icon-128.png" alt="" width="30" height="30" class="logo" />
+        <div class="title-block">
+          <h1 id="page-title">Loading screenshot…</h1>
+          <a id="page-url" class="muted" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-glass" id="copy-first" type="button" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5" /><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" /></svg>
+            <span>Copy Image</span>
+          </button>
+          <button class="btn btn-primary" id="download-all" type="button" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19h14" /></svg>
+            <span id="download-all-label">Download</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="summary glass" id="summary" hidden>
+        <dl class="summary-stats num">
+          <div><dt>Resolution</dt><dd id="stat-resolution">—</dd></div>
+          <div><dt>Format</dt><dd id="stat-format">—</dd></div>
+          <div><dt>File size</dt><dd id="stat-size">—</dd></div>
+          <div><dt>Images</dt><dd id="stat-parts">—</dd></div>
+          <div><dt>Pixel density</dt><dd id="stat-scale">—</dd></div>
+          <div><dt>Captured</dt><dd id="stat-date">—</dd></div>
+        </dl>
+      </section>
+
+      <section class="callout glass" id="docs-callout" hidden>
+        <div class="callout-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6.5 2.5h7.8L19 7.2v12.3a2 2 0 0 1-2 2H6.5a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2Z" fill="#4285F4" /><path d="M14.3 2.5 19 7.2h-3.2a1.5 1.5 0 0 1-1.5-1.5V2.5Z" fill="#A1C2FA" /><path d="M8 11h8M8 14h8M8 17h5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" /></svg>
+        </div>
+        <div>
+          <strong id="docs-callout-title">Insert into Google Docs</strong>
+          <p id="docs-callout-text"></p>
+        </div>
+      </section>
+
+      <section class="notes" id="notes" hidden></section>
+
+      <section id="parts" class="parts"></section>
+
+      <section class="debug glass" id="debug" hidden>
+        <h2 class="eyebrow">Capture coordinates</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Phase</th><th>scrollTop (CSS)</th><th>Content top (CSS)</th><th>Band (viewport CSS)</th><th>Output rows</th></tr>
+            </thead>
+            <tbody id="debug-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="empty glass" id="empty" hidden>
+        <h2 id="empty-title">Screenshot not found</h2>
+        <p class="muted" id="empty-text">This capture was cleaned up to save disk space. LongShot keeps your three most recent screenshots.</p>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

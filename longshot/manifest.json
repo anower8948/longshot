@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "LongShot",
+  "short_name": "LongShot",
+  "version": "1.0.0",
+  "description": "Capture razor-sharp full-page screenshots at your display's native resolution, stitched seamlessly and ready for Google Docs.",
+  "minimum_chrome_version": "116",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_title": "LongShot — capture this page",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "options_page": "options/options.html",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "downloads",
+    "offscreen",
+    "clipboardWrite"
+  ],
+  "commands": {
+    "capture-full-page": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Capture the full page"
+    },
+    "capture-visible-area": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+V",
+        "mac": "MacCtrl+Shift+V"
+      },
+      "description": "Capture the visible area"
+    }
+  }
+}

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LongShot</title>
+    <link rel="stylesheet" href="../ui/theme.css" />
+    <link rel="stylesheet" href="popup.css" />
+    <script type="module" src="popup.js"></script>
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true"></div>
+
+    <header class="header">
+      <div class="brand">
+        <img class="brand-icon" src="../icons/icon-128.png" alt="" width="34" height="34" />
+        <div>
+          <h1>LongShot</h1>
+          <p class="muted">Capture a high-quality webpage</p>
+        </div>
+      </div>
+      <button class="icon-btn" id="open-settings" type="button" title="Settings" aria-label="Open settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" />
+          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 8.9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1.03-1.56V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9c.26.6.85 1 1.51 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1Z" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- ============================================================ MAIN -->
+    <main id="view-main" class="view">
+      <section class="page-chip glass" id="page-chip" aria-live="polite">
+        <span class="chip-dot" id="chip-dot"></span>
+        <div class="chip-text">
+          <strong id="page-host">Reading page…</strong>
+          <span id="page-detail" class="muted num">&nbsp;</span>
+        </div>
+      </section>
+
+      <section class="restricted glass" id="restricted" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7.5v5.5M12 16.5h.01" /></svg>
+        <div>
+          <strong id="restricted-title"></strong>
+          <p id="restricted-message" class="muted"></p>
+        </div>
+      </section>
+
+      <section class="modes" id="modes" role="radiogroup" aria-label="Capture mode">
+        <label class="mode glass">
+          <input type="radio" name="mode" value="full" />
+          <span class="mode-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="2.8" width="12" height="18.4" rx="2.4" /><path d="M9 7h6M9 10h6M9 13h6M9 16h3.5" stroke-linecap="round" /></svg>
+          </span>
+          <span class="mode-label">Full Page</span>
+          <span class="mode-sub">Entire page</span>
+        </label>
+        <label class="mode glass">
+          <input type="radio" name="mode" value="visible" />
+          <span class="mode-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.6" /><path d="M3 8.6h18" /></svg>
+          </span>
+          <span class="mode-label">Visible Area</span>
+          <span class="mode-sub">On screen</span>
+        </label>
+        <label class="mode glass">
+          <input type="radio" name="mode" value="region" />
+          <span class="mode-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16" /><rect x="8.5" y="8.5" width="7" height="7" rx="1.2" stroke-dasharray="2 1.6" /></svg>
+          </span>
+          <span class="mode-label">Custom Area</span>
+          <span class="mode-sub">Drag to select</span>
+        </label>
+        <label class="mode glass">
+          <input type="radio" name="mode" value="current" />
+          <span class="mode-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.8" width="12" height="18.4" rx="2.4" /><path d="M6 9.5h12" stroke-dasharray="1.8 1.6" /><path d="M12 12.5v5.5M9.6 15.6 12 18l2.4-2.4" /></svg>
+          </span>
+          <span class="mode-label">From Here</span>
+          <span class="mode-sub">Here → end</span>
+        </label>
+      </section>
+
+      <section class="options glass" id="options">
+        <div class="field">
+          <div class="field-head">
+            <span class="field-label">Quality</span>
+            <span class="field-note num" id="quality-note"></span>
+          </div>
+          <div class="segmented" role="radiogroup" aria-label="Quality">
+            <label><input type="radio" name="quality" value="standard" /><span>Standard</span></label>
+            <label><input type="radio" name="quality" value="high" /><span>High</span></label>
+            <label><input type="radio" name="quality" value="maximum" /><span>Maximum</span></label>
+          </div>
+          <p class="limit-note" id="quality-limit" hidden></p>
+        </div>
+
+        <div class="field">
+          <div class="field-head">
+            <span class="field-label">Format</span>
+            <span class="field-note" id="format-note"></span>
+          </div>
+          <div class="segmented" role="radiogroup" aria-label="Format" id="format-group">
+            <label><input type="radio" name="format" value="png" /><span>PNG</span></label>
+            <label><input type="radio" name="format" value="jpeg" /><span>JPEG</span></label>
+            <label><input type="radio" name="format" value="webp" /><span>WebP</span></label>
+          </div>
+        </div>
+
+        <label class="toggle-row">
+          <span class="docs-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6.5 2.5h7.8L19 7.2v12.3a2 2 0 0 1-2 2H6.5a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2Z" fill="#4285F4" /><path d="M14.3 2.5 19 7.2h-3.2a1.5 1.5 0 0 1-1.5-1.5V2.5Z" fill="#A1C2FA" /><path d="M8 11h8M8 14h8M8 17h5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" /></svg>
+          </span>
+          <span class="toggle-text">
+            <span class="field-label">Google Docs Optimized</span>
+            <span class="muted" id="docs-note">Sharp PNG, sized to fit Docs pages</span>
+          </span>
+          <span class="switch">
+            <input type="checkbox" id="docs-optimized" />
+            <span class="track"></span>
+            <span class="knob"></span>
+          </span>
+        </label>
+
+        <div class="estimate num" id="estimate" hidden></div>
+      </section>
+
+      <button class="btn btn-primary btn-lg start" id="start" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5V7a2 2 0 0 1 2-2h1.8l1.4-2h5.6l1.4 2H18a2 2 0 0 1 2 2v1.5" /><path d="M20 12v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-5" /><circle cx="12" cy="12.5" r="3.2" /></svg>
+        <span id="start-label">Start Capture</span>
+      </button>
+
+      <footer class="footer">
+        <span class="shortcut" id="shortcut-hint"></span>
+        <button class="link" id="open-shortcuts" type="button">Shortcuts</button>
+      </footer>
+    </main>
+
+    <!-- ======================================================= SELECTING -->
+    <main id="view-selecting" class="view" hidden>
+      <section class="status-card glass">
+        <div class="status-icon accent" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16" /></svg>
+        </div>
+        <h2>Select an area on the page</h2>
+        <p class="muted">Drag on the page to choose what to capture. Scroll while dragging to select more than one screen.</p>
+        <button class="btn btn-danger" id="cancel-selection" type="button">Cancel Selection</button>
+      </section>
+    </main>
+
+    <!-- ======================================================== PROGRESS -->
+    <main id="view-progress" class="view" hidden>
+      <section class="status-card glass" aria-live="polite">
+        <div class="ring" aria-hidden="true">
+          <svg viewBox="0 0 80 80">
+            <circle class="ring-track" cx="40" cy="40" r="34" />
+            <circle class="ring-value" id="ring-value" cx="40" cy="40" r="34" />
+          </svg>
+          <span class="ring-label num" id="progress-percent">0%</span>
+        </div>
+        <h2 id="progress-title">Preparing page…</h2>
+        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progress-bar"><i id="progress-fill"></i></div>
+        <dl class="stats num" id="progress-stats">
+          <div><dt>Section</dt><dd id="progress-section">—</dd></div>
+          <div><dt>Position</dt><dd id="progress-position">—</dd></div>
+        </dl>
+        <button class="btn btn-danger" id="cancel-capture" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17" /></svg>
+          Cancel Capture
+        </button>
+        <p class="hint muted">Keep this tab in front · <span class="kbd">Esc</span> on the page also cancels</p>
+      </section>
+    </main>
+
+    <!-- ============================================================ DONE -->
+    <main id="view-done" class="view" hidden>
+      <section class="status-card glass done-card">
+        <div class="done-head">
+          <div class="status-icon success" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path class="check" d="m6 12.5 4 4 8-9" /></svg>
+          </div>
+          <div>
+            <h2>Screenshot captured</h2>
+            <p class="muted" id="done-subtitle">Saved to Downloads</p>
+          </div>
+        </div>
+        <div class="thumb" id="done-thumb" hidden><img id="done-thumb-img" alt="Preview of the captured screenshot" /></div>
+        <dl class="stats num">
+          <div><dt>Resolution</dt><dd id="done-resolution">—</dd></div>
+          <div><dt>Format</dt><dd id="done-format">—</dd></div>
+          <div><dt>File size</dt><dd id="done-size">—</dd></div>
+          <div><dt>Images</dt><dd id="done-parts">—</dd></div>
+        </dl>
+        <p class="note" id="done-note" hidden></p>
+        <div class="actions actions-3">
+          <button class="btn btn-glass" id="crop-image" type="button" title="Trim the screenshot — keep only the part you need">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2v14a2 2 0 0 0 2 2h14" /><path d="M18 22V8a2 2 0 0 0-2-2H2" /></svg>
+            Crop
+          </button>
+          <button class="btn btn-glass" id="open-image" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-8.5 8.5M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4" /></svg>
+            Open
+          </button>
+          <button class="btn btn-primary" id="download-again" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19h14" /></svg>
+            <span id="download-label">Download</span>
+          </button>
+        </div>
+      </section>
+      <button class="btn new-capture" id="new-capture" type="button">New Capture</button>
+    </main>
+
+    <!-- =========================================================== ERROR -->
+    <main id="view-error" class="view" hidden>
+      <section class="status-card glass">
+        <div class="status-icon danger" id="error-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 7.5v5.5M12 16.5h.01" /><circle cx="12" cy="12" r="9" /></svg>
+        </div>
+        <h2 id="error-title">Something went wrong</h2>
+        <p class="muted" id="error-message"></p>
+        <p class="note" id="error-hint" hidden></p>
+        <details class="detail" id="error-detail-wrap" hidden>
+          <summary>Technical details</summary>
+          <code id="error-detail"></code>
+        </details>
+        <div class="actions">
+          <button class="btn btn-glass" id="error-back" type="button">Back</button>
+          <button class="btn btn-primary" id="error-retry" type="button">Try Again</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LongShot Settings</title>
+    <link rel="stylesheet" href="../ui/theme.css" />
+    <link rel="stylesheet" href="options.css" />
+    <script type="module" src="options.js"></script>
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true"></div>
+
+    <div class="shell">
+      <header class="page-header">
+        <img src="../icons/icon-128.png" alt="" width="52" height="52" />
+        <div>
+          <h1>LongShot Settings</h1>
+          <p class="muted">Changes save automatically and apply to your next capture.</p>
+        </div>
+        <span class="saved" id="saved" role="status" aria-live="polite">Saved</span>
+      </header>
+
+      <nav class="tabs glass" aria-label="Settings sections">
+        <a href="#capture">Capture</a>
+        <a href="#output">Output</a>
+        <a href="#docs">Google Docs</a>
+        <a href="#advanced">Advanced</a>
+        <a href="#permissions">Permissions</a>
+      </nav>
+
+      <form id="settings-form" novalidate>
+        <!-- ======================================================== CAPTURE -->
+        <section class="group" id="capture">
+          <h2 class="eyebrow">Capture</h2>
+          <div class="card glass">
+            <div class="row">
+              <div class="row-text">
+                <label for="quality">Default quality</label>
+                <p>Chrome captures at your display’s pixel density (<span id="dpr-info">1×</span> here). LongShot never upscales — Standard downsamples to 1×, High keeps up to 2×, Maximum keeps everything.</p>
+              </div>
+              <select class="select" id="quality" name="quality">
+                <option value="standard">Standard (1×)</option>
+                <option value="high">High (2×)</option>
+                <option value="maximum">Maximum (native)</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="row-text">
+                <label for="format">Default format</label>
+                <p>PNG is lossless and keeps text crisp. JPEG and WebP are smaller but soften text edges.</p>
+              </div>
+              <select class="select" id="format" name="format">
+                <option value="png">PNG (recommended)</option>
+                <option value="jpeg">JPEG</option>
+                <option value="webp">WebP</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="row-text">
+                <label for="captureDelay">Capture delay</label>
+                <p>Wait after each scroll so lazy images, fonts and animations settle. Increase for slow or heavy pages.</p>
+              </div>
+              <select class="select" id="captureDelay" name="captureDelay">
+                <option value="0">0 ms</option>
+                <option value="250">250 ms</option>
+                <option value="500">500 ms (default)</option>
+                <option value="1000">1000 ms</option>
+                <option value="2000">2000 ms</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="row-text">
+                <label for="hideFixedElements">Fixed &amp; sticky elements</label>
+                <p>Smart shows headers once at the top and bottom bars once at the end, instead of repeating them in every section.</p>
+              </div>
+              <select class="select" id="hideFixedElements" name="hideFixedElements">
+                <option value="smart">Smart (recommended)</option>
+                <option value="hide">Hide completely</option>
+                <option value="off">Don’t change</option>
+              </select>
+            </div>
+
+            <label class="row">
+              <span class="row-text">
+                <span class="label">Pause animations during capture</span>
+                <span class="desc">Finishes CSS animations and transitions instantly, pauses videos and hides the text cursor.</span>
+              </span>
+              <span class="switch"><input type="checkbox" name="pauseAnimations" /><span class="track"></span><span class="knob"></span></span>
+            </label>
+
+            <label class="row">
+              <span class="row-text">
+                <span class="label">Preload lazy content</span>
+                <span class="desc">Scrolls through the page once before capturing so lazy-loaded images and sections are ready.</span>
+              </span>
+              <span class="switch"><input type="checkbox" name="preloadLazyContent" /><span class="track"></span><span class="knob"></span></span>
+            </label>
+
+            <label class="row">
+              <span class="row-text">
+                <span class="label">Restore scroll position</span>
+                <span class="desc">Return to where you were after capturing. Turn off to stay at the bottom of the page. (Cancelled captures always restore.)</span>
+              </span>
+              <span class="switch"><input type="checkbox" name="restoreScroll" /><span class="track"></span><span class="knob"></span></span>
+            </label>
+          </div>
+        </section>
+
+        <!-- ========================================================= OUTPUT -->
+        <section class="group" id="output">
+          <h2 class="eyebrow">Output</h2>
+          <div class="card glass">
+            <div class="row">
+              <div class="row-text">
+                <label for="pngEffort">PNG compression</label>
+                <p>PNG is always lossless — this only trades encoding time for file size.</p>
+              </div>
+              <select class="select" id="pngEffort" name="pngEffort">
+                <option value="fast">Fast</option>
+                <option value="balanced">Balanced (default)</option>
+                <option value="smallest">Smallest file</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="row-text">
+                <label for="jpegQuality">JPEG / WebP quality</label>
+                <p>Only used when you choose JPEG or WebP.</p>
+              </div>
+              <select class="select" id="jpegQuality" name="jpegQuality">
+                <option value="0.8">80%</option>
+                <option value="0.9">90%</option>
+                <option value="0.95">95% (default)</option>
+                <option value="1">100%</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="row-text">
+                <label for="maxImageHeight">Maximum image height</label>
+                <p>Taller captures are split automatically. PNG streams large images, so it can exceed browser canvas limits; JPEG is limited to 32,767 px and WebP to 16,383 px per image.</p>
+              </div>
+              <select class="select" id="maxImageHeight" name="maxImageHeight">
+                <option value="16383">16,383 px</option>
+                <option value="32767">32,767 px</option>
+                <option value="65535">65,535 px</option>
+                <option value="100000">100,000 px (default)</option>
+                <option value="250000">250,000 px</option>
+              </select>
+            </div>
+
+            <label class="row">
+              <span class="row-text">
+                <span class="label">Split long screenshots</span>
+                <span class="desc">Always save long captures as several images, cut at clean breaks between lines of text.</span>
+              </span>
+              <span class="switch"><input type="checkbox" name="splitLongScreenshots" /><span class="track"></span><span class="knob"></span></span>
+            </label>
+
+            <div class="row" id="split-height-row">
+              <div class="row-text">
+                <label for="splitPartHeight">Part height</label>
+                <p>Maximum height of each part when splitting.</p>
+              </div>
+              <select class="select" id="splitPartHeight" name="splitPartHeight">
+                <option value="4000">4,000 px</option>
+                <option value="8000">8,000 px</option>
+                <option value="16000">16,000 px (default)</option>
+                <option value="32000">32,000 px</option>
+              </select>
+            </div>
+
+            <label class="row">
+              <span class="row-text">
+                <span class="label">Download automatically</span>
+                <span class="desc">Save to Downloads › LongShot as soon as the capture finishes. When off, the result page opens instead.</span>
+              </span>
+              <span class="switch"><input type="checkbox" name="autoDownload" /><span class="track"></span><span class="knob"></span></span>
+            </label>
+
+            <label class="row">
+              <span class="row-text">
+                <span class="label">Open result page after capture</span>
+                <span class="desc">Shows the image with Copy buttons — handy for pasting straight into Google Docs.</span>
+              </span>
+              <span class="switch"><input type="checkbox" name="openResultAfterCapture" /><span class="track"></span><span class="knob"></span></span>
+            </label>
+          </div>
+        </section>
+
+        <!-- =========================================================== DOCS -->
+        <section class="group" id="docs">
+          <h2 class="eyebrow">Google Docs</h2>
+          <div class="card glass">
+            <div class="callout">
+              <strong>Why Docs needs special handling</strong>
+              <p>Google Docs shrinks any image taller than a page until it fits — a long screenshot becomes a thin, unreadable strip — and it rejects images over 25 megapixels. Docs-optimized captures are saved as full-resolution PNGs, each exactly one page tall and cut between lines of text. Insert them in order (Insert → Image → Upload, select all) or use Copy on the result page and paste.</p>
+            </div>
+
+            <label class="row">
+              <span class="row-text">
+                <span class="label">Google Docs optimized by default</span>
+                <span class="desc">Also available as a switch in the popup.</span>
+              </span>
+              <span class="switch"><input type="checkbox" name="docsOptimized" /><span class="track"></span><span class="knob"></span></span>
+            </label>
+
+            <div class="row">
+              <div class="row-text">
+                <label for="docsPageSize">Document page size</label>
+                <p>Match your document’s page setup (File → Page setup). “Pageless” keeps one image per capture, split only at the 25 MP limit.</p>
+              </div>
+              <select class="select" id="docsPageSize" name="docsPageSize">
+                <option value="letter">US Letter</option>
+                <option value="a4">A4</option>
+                <option value="legal">US Legal</option>
+                <option value="pageless">Pageless</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================= ADVANCED -->
+        <section class="group" id="advanced">
+          <h2 class="eyebrow">Advanced</h2>
+          <div class="card glass">
+            <div class="row">
+              <div class="row-text">
+                <label for="maxPageLength">Maximum page length</label>
+                <p>Safety limit for infinite-scroll pages, in CSS pixels.</p>
+              </div>
+              <select class="select" id="maxPageLength" name="maxPageLength">
+                <option value="25000">25,000 px</option>
+                <option value="50000">50,000 px</option>
+                <option value="100000">100,000 px (default)</option>
+                <option value="250000">250,000 px</option>
+              </select>
+            </div>
+
+            <label class="row">
+              <span class="row-text">
+                <span class="label">Debug logging</span>
+                <span class="desc">Log capture decisions to the service worker console (chrome://extensions → LongShot → service worker).</span>
+              </span>
+              <span class="switch"><input type="checkbox" name="debugLogging" /><span class="track"></span><span class="knob"></span></span>
+            </label>
+
+            <label class="row">
+              <span class="row-text">
+                <span class="label">Show capture coordinates</span>
+                <span class="desc">Shows selection coordinates while selecting, and section positions with seam markers on the result page.</span>
+              </span>
+              <span class="switch"><input type="checkbox" name="showCaptureCoordinates" /><span class="track"></span><span class="knob"></span></span>
+            </label>
+
+            <div class="row">
+              <div class="row-text">
+                <span class="label">Keyboard shortcuts</span>
+                <p id="shortcut-list">—</p>
+              </div>
+              <button class="btn btn-glass" type="button" id="edit-shortcuts">Customize…</button>
+            </div>
+
+            <div class="row">
+              <div class="row-text">
+                <span class="label">Reset</span>
+                <p>Restore every setting to its default value.</p>
+              </div>
+              <button class="btn btn-danger" type="button" id="reset">Reset to Defaults</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================== PERMISSIONS -->
+        <section class="group" id="permissions">
+          <h2 class="eyebrow">Permissions</h2>
+          <div class="card glass perms">
+            <p class="muted">LongShot has no access to your browsing until you click its icon or press a shortcut, and it never sends data anywhere — everything happens on your device.</p>
+            <dl>
+              <dt>activeTab</dt>
+              <dd>Temporary access to the current tab only after you invoke LongShot, so it can scroll and screenshot that page.</dd>
+              <dt>scripting</dt>
+              <dd>Runs the capture helper in that tab to measure the page, scroll it, handle sticky headers and restore it afterwards.</dd>
+              <dt>downloads</dt>
+              <dd>Saves finished screenshots to your Downloads folder.</dd>
+              <dt>offscreen</dt>
+              <dd>A hidden extension page that stitches and encodes large images without blocking the browser.</dd>
+              <dt>storage</dt>
+              <dd>Remembers these settings (synced with your Chrome profile).</dd>
+              <dt>clipboardWrite</dt>
+              <dd>Lets the result page copy a screenshot to the clipboard for pasting into Google Docs.</dd>
+            </dl>
+          </div>
+        </section>
+      </form>
+
+      <footer class="page-footer muted">LongShot <span id="version"></span></footer>
+    </div>
+  </body>
+</html>
